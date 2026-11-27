@@ -1,0 +1,10 @@
+name = "KimberlingLean"
+defaultTargets = ["Kimberling"]
+
+[[require]]
+name = "TauCeti"
+git = "https://github.com/TauCetiProject/TauCeti"
+rev = "ac8801f612041ee3dcb3fa3f950f01318206737c"
+
+[[lean_lib]]
+name = "Kimberling"
