@@ -1,5 +1,5 @@
 /-
-Copyright (c) 2026 Jeff K. All rights reserved.
+Copyright (c) 2026 Ming-Chih Kao. All rights reserved.
 Released under Apache 2.0 license.
 -/
 import TauCeti.Analysis.CompletelyMonotone.Bernstein.HausdorffBernsteinWidder
@@ -11,7 +11,8 @@ Question (Clark Kimberling, MathOverflow 195959, 2015). Let `f` from `[0, ∞]` 
 completely monotonic on `(0, ∞)`, let `g` be its inverse, `C(u, v) = f(g(u) + g(v))` and
 `a = (u + v) / 2`. Is `C(a, a) - a² ≥ C(u, v) - uv` on `[0, 1]²`?
 
-We prove that the answer is yes. The definitions `CompletelyMonotoneOn` and `archC` and the
+We prove that the answer is yes, with the usual Archimedean endpoint convention f(0) = 1, f(∞) = 0
+(equivalently, C is a copula). The definitions `CompletelyMonotoneOn` and `archC` and the
 statement of `main` are copied verbatim from the Left to Solve statement `mo-195959`.
 
 Proof: by Bernstein's theorem (TauCeti's Hausdorff–Bernstein–Widder theorem) `f` is the Laplace
@@ -27,7 +28,7 @@ open scoped NNReal
 namespace Kimberling
 
 /-- `f` is completely monotonic on the open set `s`: it is infinitely differentiable on `s` and
-`(-1)ᵏ f⁽ᵏ⁾(x) ≥ 0` for every `k` and every `x ∈ s` (Widder 1946). -/
+`(-1)ᵏ f⁽ᵏ⁾(x) ≥ 0` for every `k` and every `x ∈ s` (Widder 1941). -/
 def CompletelyMonotoneOn (f : ℝ → ℝ) (s : Set ℝ) : Prop :=
   ContDiffOn ℝ (⊤ : ℕ∞) f s ∧ ∀ k : ℕ, ∀ x ∈ s, 0 ≤ (-1 : ℝ) ^ k * iteratedDerivWithin k f s x
 
@@ -330,7 +331,7 @@ theorem main :
       ∀ u ∈ Set.Icc (0 : ℝ) 1, ∀ v ∈ Set.Icc (0 : ℝ) 1,
         archC f u v - u * v ≤ archC f ((u + v) / 2) ((u + v) / 2) - ((u + v) / 2) ^ 2 := by
   intro f hcont hf0 hlim hcm
-  obtain ⟨μ, hμfin, hrep'⟩ :=
+  obtain ⟨μ, _, hrep'⟩ :=
     TauCeti.exists_representsLaplace_of_isContinuousCompletelyMonotoneOnIoi (toTauCeti hcont hcm)
   have hrep : ∀ t, 0 ≤ t → f t = ∫ x, E t x ∂μ := fun t ht => by
     rw [hrep' t ht, TauCeti.laplaceTransform_apply]; rfl
@@ -343,7 +344,7 @@ theorem main :
   set g := Function.invFunOn f (Set.Ici 0) with hg
   have hgspec : ∀ {u : ℝ}, 0 < u → u ≤ 1 → g u ∈ Ici (0 : ℝ) ∧ f (g u) = u := fun hu0 hu1 =>
     Function.invFunOn_pos (exists_preimage hcont hf0 hlim hu0 hu1)
-  -- the claim with u < v, both positive
+  -- the claim for positive arguments
   have hcase : ∀ u v : ℝ, 0 < u → 0 < v → u ≤ 1 → v ≤ 1 →
       archC f u v - u * v ≤ archC f ((u + v) / 2) ((u + v) / 2) - ((u + v) / 2) ^ 2 := by
     intro u v hu0 hv0 hu1 hv1

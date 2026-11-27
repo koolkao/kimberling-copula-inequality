@@ -1,0 +1,33 @@
+{
+  "title": "Kimberling's inequality for Archimedean copulas: proof and Lean 4 formalization",
+  "upload_type": "software",
+  "creators": [
+    {
+      "name": "Kao, Ming-Chih",
+      "affiliation": "Stanford University"
+    }
+  ],
+  "description": "Proof, with a machine-checked Lean 4 formalization, that every bivariate Archimedean copula C with completely monotone inverse generator satisfies C(a,a) - a^2 >= C(u,v) - uv with a = (u+v)/2, answering MathOverflow question 195959 (C. Kimberling, 2015). The accompanying note also proves on paper (not formalized) a stronger result for strict Archimedean copulas that are stochastically increasing: C - uv is Schur-concave. It gives counterexamples showing that LTD/TP2 Archimedean copulas, and symmetric SI or density-TP2 non-Archimedean copulas, can violate the inequality. The Lean statement is identical to the Left to Solve statement mo-195959. Bernstein's theorem is taken from the TauCeti library (Apache-2.0). We found no earlier proof in the sources examined (see NOTE.md for the search and its limitations). The work was developed with AI assistance; the author is responsible for the content.",
+  "license": "Apache-2.0",
+  "keywords": [
+    "copulas",
+    "Archimedean copula",
+    "complete monotonicity",
+    "Bernstein theorem",
+    "Lean 4",
+    "formal verification"
+  ],
+  "related_identifiers": [
+    {
+      "identifier": "https://mathoverflow.net/q/195959",
+      "relation": "isSupplementTo",
+      "scheme": "url"
+    },
+    {
+      "identifier": "https://github.com/TauCetiProject/TauCeti",
+      "relation": "requires",
+      "scheme": "url"
+    }
+  ],
+  "version": "1.0.0"
+}
